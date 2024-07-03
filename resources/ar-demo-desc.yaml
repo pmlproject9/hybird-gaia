@@ -1,0 +1,155 @@
+apiVersion: apps.gaia.io/v1alpha1
+kind: Description
+metadata:
+  name: xlm-eb981a0314-20240116101037-10-2024012305
+  namespace: gaia-reserved
+spec:
+  appID: appID-case0
+  deploymentCondition:
+    mandatory:
+    - extent: WyJBbGliYWJhIiwiVGVuY2VudCIsIkh1YXdlaSJd
+      object:
+        name: supplier-name
+        type: label
+      relation: In
+      subject:
+        name: ac-eb981a0314-20240116101037-10-2024012305-acas
+        type: component
+    - extent: WyJ3dXN1biIsICJUZW5jZW50Il0K
+      object:
+        name: supplier-name
+        type: label
+      relation: NotIn
+      subject:
+        name: ac-eb981a0314-20240116101037-10-2024012305-acrs
+        type: component
+  expectedPerformance:
+    boundaries:
+      inner:
+      - name: bca857af4d8a453cbf83170bebbce052
+        subject: ac-eb981a0314-20240116101037-10-2024012305-acas
+        type: replicas
+        value: MQ==
+      - name: 652547d8fc2445729e66a870bd78f490
+        subject: ac-eb981a0314-20240116101037-10-2024012305-acrs
+        type: replicas
+        value: MQ==
+    maintenance: {}
+  workloadComponents:
+  - componentName: ac-eb981a0314-20240116101037-10-2024012305-acas
+    module:
+      metadata:
+        labels:
+          app: acas
+      spec:
+        containers:
+        - env:
+          - name: SCNNUM
+            value: "1"
+          - name: SCNID
+            value: /inner-private/ac/acas/1
+          image: 122.96.144.180:30080/ac/acas_eb981a0314_acas_demo_20240116095622:kata
+          name: acas
+          resources:
+            limits:
+              cpu: "1"
+              memory: 512Mi
+            requests:
+              cpu: "1"
+              memory: 512Mi
+          volumeMounts:
+          - mountPath: /dev/shm
+            name: shm
+          - mountPath: /tmp
+            name: usock
+        volumes:
+        - hostPath:
+            path: /dev/shm
+            type: DirectoryOrCreate
+          name: shm
+        - hostPath:
+            path: /tmp
+            type: DirectoryOrCreate
+          name: usock
+    namespace: accctrlteam
+    sandbox: SecureContainer
+    schedule:
+      cronEnable: false
+      endEnable: false
+      friday: {}
+      monday: {}
+      saturday: {}
+      startEnable: false
+      sunday: {}
+      thursday: {}
+      tuesday: {}
+      wednesday: {}
+    workloadType: stateless-system-service
+  - componentName: ac-eb981a0314-20240116101037-10-2024012305-acrs
+    module:
+      metadata:
+        labels:
+          app: acrs
+      spec:
+        containers:
+        - env:
+          - name: SCNNUM
+            value: "1"
+          - name: SCNID
+            value: /inner-private/ac/acrs/1
+          image: 122.96.144.180:30080/ac/acrs_eb981a0314_acrs_demo_20240122102350:kata
+          name: arcsdemo2
+          resources:
+            limits:
+              cpu: "2"
+              memory: 8Gi
+            requests:
+              cpu: "2"
+              memory: 8Gi
+          volumeMounts:
+          - mountPath: /dev/shm
+            name: shm
+          - mountPath: /tmp
+            name: usock
+        - env:
+          - name: SCNNUM
+            value: "1"
+          - name: SCNID
+            value: /inner-private/ac/acrs/1
+          image: 122.96.144.180:30080/ac/acrs_eb981a0314_acrs_demo_20240123170004:kata
+          name: acrsdemotool
+          resources:
+            limits:
+              cpu: "1"
+              memory: 2Gi
+            requests:
+              cpu: "1"
+              memory: 2Gi
+          volumeMounts:
+          - mountPath: /dev/shm
+            name: shm
+          - mountPath: /tmp
+            name: usock
+        volumes:
+        - hostPath:
+            path: /dev/shm
+            type: DirectoryOrCreate
+          name: shm
+        - hostPath:
+            path: /tmp
+            type: DirectoryOrCreate
+          name: usock
+    namespace: accctrlteam
+    sandbox: SecureContainer
+    schedule:
+      cronEnable: false
+      endEnable: false
+      friday: {}
+      monday: {}
+      saturday: {}
+      startEnable: false
+      sunday: {}
+      thursday: {}
+      tuesday: {}
+      wednesday: {}
+    workloadType: stateless-system-service
